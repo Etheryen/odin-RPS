@@ -1,10 +1,26 @@
+let score = document.getElementById('score');
+let log = document.getElementById('log');
+let rock = document.getElementById('rock');
+let paper = document.getElementById('paper');
+let scissors = document.getElementById('scissors');
+let body = document.querySelector('body');
+
 let playerScore = 0;
 let computerScore = 0;
 
+gameEnd = () => {
+  rock.remove();
+  paper.remove();
+  scissors.remove();
+  const restart = document.createElement('button');
+  restart.innerHTML = 'Restart';
+  body.appendChild(restart);
+  restart.onclick = () => {window.location.reload()};
+}
 
 computerPlay = () => {
   const play = ['Rock', 'Paper', 'Scissors'];
-  return play[Math.floor(Math.random() * 3)]
+  return play[Math.floor(Math.random() * 3)];
 }
 
 playRound = (playerSelection, computerSelection) => {
@@ -48,26 +64,25 @@ playRound = (playerSelection, computerSelection) => {
       playerScore++;
     }
   }
-  console.log(`${result}. Score ${playerScore}:${computerScore}`);
   return result;
 }
 
-round = () => {
-  const playerSelection = prompt('Rock Paper Scissors?');
+round = (playerSelection) => {
   const computerSelection = computerPlay();
-  playRound(playerSelection, computerSelection);
-}
+  log.innerHTML += playRound(playerSelection, computerSelection);
+  log.innerHTML += '<br>'
+  score.innerHTML = `${playerScore}:${computerScore}`;
 
-game = () => {
-  while(playerScore < 5 && computerScore < 5) {
-    round();
-  }
   if(playerScore == 5) {
-    console.log('You Won!');
+    log.innerHTML += ('You Won!<br>');
+    gameEnd();
   }
-  else {
-    console.log('You Lost...');
+  if(computerScore == 5) {
+    log.innerHTML += ('You Lost...<br>');
+    gameEnd();
   }
 }
 
-game();
+rock.onclick = () => round('rock');
+paper.onclick = () => round('paper');
+scissors.onclick = () => round('scissors');
