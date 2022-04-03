@@ -1,2 +1,2 @@
 # odin-RPS
-Rock paper scissors in console with plain js.
+Rock-Paper-Scissors with pure html ui.
